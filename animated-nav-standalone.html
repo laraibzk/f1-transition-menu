@@ -14,9 +14,7 @@
             padding: 0;
             min-height: 100vh;
             font-family: "Helvetica Neue", Arial, sans-serif;
-            background: radial-gradient(circle at 20% 20%, rgba(109, 141, 76, 0.28), transparent 55%),
-                radial-gradient(circle at 80% 30%, rgba(71, 92, 52, 0.3), transparent 60%),
-                #0d100c;
+            background: #2a2e2a;
             color: #f4f4f1;
             overflow: hidden;
         }
@@ -32,16 +30,10 @@
         .overlay {
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(
-                    135deg,
-                    rgba(213, 244, 93, 0.025),
-                    rgba(213, 244, 93, 0.025) 12px,
-                    transparent 12px,
-                    transparent 32px
-                ),
-                radial-gradient(circle at 50% 120%, rgba(213, 244, 93, 0.18), transparent 60%);
+            background: radial-gradient(ellipse at top, rgba(213, 244, 93, 0.15), transparent 70%),
+                radial-gradient(ellipse at bottom right, rgba(109, 141, 76, 0.1), transparent 65%);
             mix-blend-mode: screen;
-            opacity: 0.6;
+            opacity: 0.7;
             pointer-events: none;
             z-index: 0;
         }
