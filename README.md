@@ -1,7 +1,8 @@
 # Animated Navigation
 
-A sophisticated letter-by-letter hover animation for navigation menus, inspired by the [Lando Norris website](https://landonorris.com/). Each letter slides up individually while a highlighted duplicate slides in from below, creating a smooth cascading effect.
 
+A sophisticated letter-by-letter hover animation for navigation menus, inspired by [Lando Norris' website](https://landonorris.com/). Each letter slides up individually while a highlighted duplicate slides in from below, creating a smooth cascading effect.
+![F1-menu-animation](https://github.com/user-attachments/assets/365c5243-70e3-4cae-bf53-ca251e849675)
 ![Demo](https://img.shields.io/badge/status-production--ready-success)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
@@ -228,7 +229,7 @@ MIT License - feel free to use in personal and commercial projects.
 
 ## Credits
 
-Animation inspired by the [Lando Norris Official Website](https://landonorris.com/).
+Animation inspired by the [Lando Norris' Official Website](https://landonorris.com/).
 
 ---
 
