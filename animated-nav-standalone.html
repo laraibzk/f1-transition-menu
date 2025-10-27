@@ -213,7 +213,6 @@
         <div class="overlay" aria-hidden="true"></div>
         <div class="content">
             <nav class="nav" aria-label="Primary">
-                <!-- Navigation items will be inserted here by JavaScript -->
             </nav>
             <div class="brandmark">
                 <span class="laurel">⚭</span>
@@ -236,13 +235,11 @@
             const word = document.createElement('span');
             word.className = 'word';
 
-            // Screen reader text
             const sr = document.createElement('span');
             sr.className = 'word-sr';
             sr.textContent = text;
             word.appendChild(sr);
 
-            // Letters container
             const letters = document.createElement('span');
             letters.className = 'letters';
             letters.setAttribute('aria-hidden', 'true');
@@ -250,21 +247,17 @@
             characters.forEach((char, index) => {
                 const letter = char === ' ' ? '\u00A0' : char;
 
-                // Letter clip container
                 const letterClip = document.createElement('span');
                 letterClip.className = 'letter-clip';
                 letterClip.style.setProperty('--char-delay', `${index * 0.03}s`);
 
-                // Letter wrapper
                 const letterWrapper = document.createElement('span');
                 letterWrapper.className = 'letter-wrapper';
 
-                // Normal letter
                 const normalLetter = document.createElement('span');
                 normalLetter.className = 'letter';
                 normalLetter.textContent = letter;
 
-                // Highlight letter
                 const highlightLetter = document.createElement('span');
                 highlightLetter.className = 'letter highlight';
                 highlightLetter.textContent = letter;
@@ -303,7 +296,6 @@
             });
         }
 
-        // Initialize on DOM ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initNavigation);
         } else {

@@ -44,11 +44,9 @@ const AnimatedWord: FC<AnimatedWordProps> = ({ text, accent, highlight }) => {
               style={{ "--char-delay": `${index * 0.05}s` } as CSSProperties}
             >
               <span className={styles.letterWrapper}>
-                {/* Normal version */}
                 <span className={styles.letter}>
                   {letter}
                 </span>
-                {/* Highlight version */}
                 <span className={`${styles.letter} ${styles.highlight}`}>
                   {letter}
                 </span>

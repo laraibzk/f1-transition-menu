@@ -5,7 +5,7 @@ A sophisticated letter-by-letter hover animation for navigation menus, inspired 
 ![Demo](https://img.shields.io/badge/status-production--ready-success)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-## ✨ Features
+## Features
 
 - **Letter-by-letter animation** with staggered timing
 - **GPU-accelerated** transforms for 60fps performance
@@ -15,7 +15,7 @@ A sophisticated letter-by-letter hover animation for navigation menus, inspired 
 - **TypeScript/Next.js** implementation included
 - **Standalone HTML** version for easy integration
 
-## 🎬 How It Works
+## How It Works
 
 The animation uses a clever stacking technique:
 
@@ -34,7 +34,7 @@ Normal State:        Hover State:
     A   (hidden)    └───────┘
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Standalone HTML
 
@@ -58,7 +58,7 @@ The Next.js version is located in:
 - Styles: `src/styles/AnimatedNav.module.css`
 - Page: `app/page.tsx`
 
-## 🎨 Customization
+## Customization
 
 ### Animation Speed
 
@@ -107,7 +107,7 @@ cubic-bezier(0.68, -0.55, 0.265, 1.55)
 cubic-bezier(0.25, 0.46, 0.45, 0.94)
 ```
 
-## 📐 Technical Architecture
+## Technical Architecture
 
 ### HTML Structure
 ```html
@@ -147,23 +147,14 @@ cubic-bezier(0.25, 0.46, 0.45, 0.94)
 
 ### Performance Optimizations
 
-- ✅ GPU-accelerated transforms
-- ✅ `will-change` hints for browser optimization
-- ✅ No layout-triggering properties
-- ✅ Hardware compositing enabled
-- ✅ Sub-pixel rendering
+- GPU-accelerated transforms
+- `will-change` hints for browser optimization
+- No layout-triggering properties
+- Hardware compositing enabled
+- Sub-pixel rendering
 
-## 🎯 Browser Support
 
-| Browser | Version | Status |
-|---------|---------|--------|
-| Chrome  | 90+     | ✅ Full support |
-| Firefox | 88+     | ✅ Full support |
-| Safari  | 14+     | ✅ Full support |
-| Edge    | 90+     | ✅ Full support |
-| Mobile  | iOS 14+, Android 10+ | ✅ Full support |
-
-## ♿ Accessibility
+## Accessibility
 
 - **Semantic HTML**: Proper `<nav>` and `<button>` elements
 - **Screen readers**: Hidden text provides full context
@@ -171,7 +162,7 @@ cubic-bezier(0.25, 0.46, 0.45, 0.94)
 - **ARIA labels**: Decorative elements properly marked with `aria-hidden`
 - **Focus indicators**: Clear outlines on keyboard focus
 
-## 📦 Files
+## Files
 
 ```
 .
@@ -188,7 +179,7 @@ cubic-bezier(0.25, 0.46, 0.45, 0.94)
         └── AnimatedNav.module.css # Component styles
 ```
 
-## 🔧 Common Adjustments
+## Common Adjustments
 
 **Make animation faster:**
 ```javascript
@@ -211,26 +202,26 @@ letterClip.style.setProperty('--char-delay', `${index * 0.03}s`);
 }
 ```
 
-## 💡 Tips
+## Tips
 
 - Keep delay multiplier between `0.03s` - `0.1s` for best effect
 - Use `cubic-bezier` for custom easing curves
 - Test on mobile devices for touch interaction
 - Ensure sufficient color contrast for accessibility
 
-## 📚 Further Reading
+## Further Reading
 
 For a deep dive into the implementation details, animation mechanics, and performance optimizations, see [README-ANIMATION.md](./README-ANIMATION.md).
 
-## 📄 License
+## License
 
 MIT License - feel free to use in personal and commercial projects.
 
-## 🙏 Credits
+## Credits
 
 Animation inspired by the [Lando Norris Official Website](https://landonorris.com/).
 
 ---
 
 **Created**: 2025  
-**Technologies**: TypeScript, Next.js 14, React, CSS Modules, Vanilla JS
+**Technologies**: TypeScript, Next.js, React, CSS Modules, Vanilla JS
