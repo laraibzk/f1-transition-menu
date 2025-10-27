@@ -48,6 +48,9 @@ letterClip.style.setProperty('--char-delay', `${index * 0.05}s`);
 
 ### Next.js Implementation
 
+**Requirements:**
+- Node.js 18.17 or later (20.x recommended)
+
 ```bash
 npm install
 npm run dev
@@ -212,6 +215,12 @@ letterClip.style.setProperty('--char-delay', `${index * 0.03}s`);
 ## Further Reading
 
 For a deep dive into the implementation details, animation mechanics, and performance optimizations, see [README-ANIMATION.md](./README-ANIMATION.md).
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 ## License
 
