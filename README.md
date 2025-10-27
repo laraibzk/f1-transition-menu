@@ -1,4 +1,5 @@
 # Animated Navigation
+![F1-menu-animation](https://github.com/user-attachments/assets/365c5243-70e3-4cae-bf53-ca251e849675)
 
 A sophisticated letter-by-letter hover animation for navigation menus, inspired by [Lando Norris' website](https://landonorris.com/). Each letter slides up individually while a highlighted duplicate slides in from below, creating a smooth cascading effect.
 
