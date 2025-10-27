@@ -1,0 +1,208 @@
+.screen {
+  --background-color: #0d100c;
+  --foreground-color: #f4f4f1;
+  --accent-color: #d5f45d;
+  --muted-color: rgba(244, 244, 241, 0.08);
+  --delay-step: 0.1s;
+  --duration: 0.45s;
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: clamp(3rem, 8vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+  background: radial-gradient(circle at 20% 20%, rgba(109, 141, 76, 0.28), transparent 55%),
+    radial-gradient(circle at 80% 30%, rgba(71, 92, 52, 0.3), transparent 60%),
+    var(--background-color);
+  color: var(--foreground-color);
+  overflow: hidden;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+      135deg,
+      rgba(213, 244, 93, 0.025),
+      rgba(213, 244, 93, 0.025) 12px,
+      transparent 12px,
+      transparent 32px
+    ),
+    radial-gradient(circle at 50% 120%, rgba(213, 244, 93, 0.18), transparent 60%);
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(4rem, 8vw, 6rem);
+  width: min(92vw, 540px);
+}
+.nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0;
+  line-height: 1.1;
+}
+.navItem {
+  position: relative;
+  display: block;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  font-size: clamp(2.35rem, 6vw, 3.7rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--foreground-color);
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.1;
+}
+.navItem:focus-visible {
+  outline: 2px solid rgba(213, 244, 93, 0.5);
+  outline-offset: 4px;
+}
+.navItemAccent {
+  color: var(--accent-color);
+}
+.navItemHighlight::after {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  right: -0.75rem;
+  top: clamp(-0.4rem, -1vw, -0.25rem);
+  height: clamp(3px, 0.5vw, 6px);
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s ease;
+  z-index: -1;
+}
+.navItemHighlight:hover::after,
+.navItemHighlight:focus-visible::after {
+  transform: scaleX(1);
+}
+.navItemShadow {
+  position: absolute;
+  inset: 0;
+  top: clamp(0.9rem, 2vw, 1.2rem);
+  color: rgba(244, 244, 241, 0.04);
+  pointer-events: none;
+  z-index: -1;
+  transform: translate3d(0, 0, 0);
+}
+.word {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0.15em;
+}
+
+.wordSr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.letters {
+  display: inline-flex;
+  gap: 0.05em;
+}
+
+.letterClip {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  height: clamp(2.5rem, 6.5vw, 4rem);
+  --char-delay: 0s;
+}
+
+.letterWrapper {
+  position: relative;
+  display: block;
+}
+
+.letter {
+  display: inline-block;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  transition: transform var(--duration) cubic-bezier(0.18, 0.82, 0.41, 1),
+    color var(--duration) ease;
+  transition-delay: var(--char-delay);
+  transform: translateY(0);
+  will-change: transform;
+}
+
+.letter.highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(100%);
+  color: var(--accent-color);
+}
+
+.navItemAccent .letter:not(.highlight) {
+  color: var(--foreground-color);
+}
+
+.navItemAccent .letter.highlight {
+  color: var(--accent-color);
+}
+
+.navItem:hover .letter:not(.highlight),
+.navItem:focus-visible .letter:not(.highlight) {
+  transform: translateY(-100%);
+}
+
+.navItem:hover .letter.highlight,
+.navItem:focus-visible .letter.highlight {
+  transform: translateY(0);
+}
+.brandmark {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  font-size: clamp(0.65rem, 1.1vw, 0.9rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.laurel {
+  font-size: 1em;
+}
+.brandText {
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .content {
+    gap: clamp(3rem, 12vw, 4rem);
+  }
+
+  .letterClip {
+    height: clamp(2rem, 8vw, 3rem);
+  }
+
+  .navItem {
+    font-size: clamp(1.8rem, 12vw, 2.8rem);
+  }
+
+  .brandmark {
+    gap: 0.75rem;
+    letter-spacing: 0.25em;
+  }
+}
+

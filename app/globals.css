@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: #0f120d;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  :root {
+    --nav-width: min(90vw, 480px);
+    --nav-gap: clamp(1.5rem, 2vw, 2.5rem);
+    --nav-letter-delay-step: 0.1s;
+    --nav-letter-offset: 100%;
+    --nav-letter-duration: 0.5s;
+    --nav-word-color: #f3f3f1;
+    --nav-accent-color: #d7f25b;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+  }
+}
+
+@layer components {
+  .animated-nav-page {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    background: radial-gradient(circle at 20% 20%, #182017 0%, #0f120d 50%),
+      radial-gradient(circle at 80% 30%, rgba(53, 68, 38, 0.45) 0%, rgba(15, 18, 13, 0) 55%),
+      #0f120d;
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .animated-nav {
+    position: relative;
+    display: grid;
+    width: var(--nav-width);
+    gap: var(--nav-gap);
+  }
+
+  .animated-nav::before {
+    content: "";
+    position: absolute;
+    top: calc(0.2rem + 4px);
+    left: clamp(-3rem, -5vw, -2rem);
+    width: calc(100% + clamp(4rem, 8vw, 6rem));
+    height: 80%;
+    background: radial-gradient(circle, rgba(215, 242, 91, 0.08) 0%, rgba(23, 28, 18, 0) 65%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .animated-nav-item {
+    position: relative;
+    z-index: 1;
+    border: none;
+    background: transparent;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--nav-word-color);
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    transition: color 0.3s ease;
+  }
+
+  .animated-nav-item[data-active="true"],
+  .animated-nav-item:hover,
+  .animated-nav-item:focus-visible {
+    color: var(--nav-accent-color);
+    outline: none;
+  }
+
+  .animated-nav-item__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  .animated-word {
+    position: relative;
+    display: inline-flex;
+    gap: 0.05em;
+    align-items: center;
+  }
+
+  .animated-word[data-accent="true"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(-0.6rem, -1vw, -0.4rem);
+    height: clamp(3px, 0.4vw, 6px);
+    background: var(--nav-accent-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s ease;
+  }
+
+  .animated-nav-item[data-active="true"] .animated-word[data-accent="true"]::after,
+  .animated-nav-item:hover .animated-word[data-accent="true"]::after,
+  .animated-nav-item:focus-visible .animated-word[data-accent="true"]::after {
+    transform: scaleX(1);
+  }
+
+  .animated-letter {
+    position: relative;
+    display: inline-block;
+    transform: translate3d(0, 0, 0);
+    transition: transform var(--nav-letter-duration) cubic-bezier(0.18, 0.82, 0.41, 1),
+      opacity var(--nav-letter-duration) ease;
+    opacity: 1;
+  }
+
+  .animated-letter::after {
+    content: attr(data-letter);
+    position: absolute;
+    inset: 0;
+    transform: translateY(100%);
+    transition: transform var(--nav-letter-duration) cubic-bezier(0.18, 0.82, 0.41, 1);
+    opacity: 1;
+  }
+
+  .animated-nav-item:hover .animated-letter,
+  .animated-nav-item:focus-visible .animated-letter,
+  .animated-nav-item[data-active="true"] .animated-letter {
+    transform: translateY(calc(var(--nav-letter-offset) * -1));
+    opacity: 0;
+  }
+
+  .animated-nav-item:hover .animated-letter::after,
+  .animated-nav-item:focus-visible .animated-letter::after,
+  .animated-nav-item[data-active="true"] .animated-letter::after {
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animated-letter {
+    --char-index: 0;
+    transition-delay: calc(
+      (var(--char-index) + 1) * var(--nav-letter-delay-step) +
+        (var(--hover-sequence, 0) * var(--nav-letter-delay-step))
+    );
+  }
+
+  .animated-letter::after {
+    transition-delay: calc(
+      (var(--char-index) + 1) * var(--nav-letter-delay-step) +
+        (var(--hover-sequence, 0) * var(--nav-letter-delay-step))
+    );
+  }
+}

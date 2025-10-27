@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Navigation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(109, 141, 76, 0.28), transparent 55%),
+                radial-gradient(circle at 80% 30%, rgba(71, 92, 52, 0.3), transparent 60%),
+                #0d100c;
+            color: #f4f4f1;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: clamp(3rem, 8vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                    135deg,
+                    rgba(213, 244, 93, 0.025),
+                    rgba(213, 244, 93, 0.025) 12px,
+                    transparent 12px,
+                    transparent 32px
+                ),
+                radial-gradient(circle at 50% 120%, rgba(213, 244, 93, 0.18), transparent 60%);
+            mix-blend-mode: screen;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(4rem, 8vw, 6rem);
+            width: min(92vw, 540px);
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 0;
+            line-height: 1.1;
+        }
+
+        .nav-item {
+            position: relative;
+            display: block;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: none;
+            font-size: clamp(2.35rem, 6vw, 3.7rem);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            text-align: left;
+            color: #f4f4f1;
+            cursor: pointer;
+            white-space: nowrap;
+            line-height: 1.1;
+        }
+
+        .nav-item:focus-visible {
+            outline: 2px solid rgba(213, 244, 93, 0.5);
+            outline-offset: 4px;
+        }
+
+        .nav-item.accent .letter:not(.highlight) {
+            color: #f4f4f1;
+        }
+
+        .nav-item.accent .letter.highlight {
+            color: #d5f45d;
+        }
+
+        .nav-item.has-highlight::after {
+            content: "";
+            position: absolute;
+            left: -0.75rem;
+            right: -0.75rem;
+            top: clamp(-0.4rem, -1vw, -0.25rem);
+            height: clamp(3px, 0.5vw, 6px);
+            background: #d5f45d;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.45s ease;
+            z-index: -1;
+        }
+
+        .nav-item.has-highlight:hover::after,
+        .nav-item.has-highlight:focus-visible::after {
+            transform: scaleX(1);
+        }
+
+        .word {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            margin: 0 0.15em;
+        }
+
+        .word-sr {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .letters {
+            display: inline-flex;
+            gap: 0.05em;
+        }
+
+        .letter-clip {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: top;
+            height: clamp(2.5rem, 6.5vw, 4rem);
+        }
+
+        .letter-wrapper {
+            position: relative;
+            display: block;
+        }
+
+        .letter {
+            display: inline-block;
+            color: inherit;
+            transition: transform 0.45s cubic-bezier(0.18, 0.82, 0.41, 1),
+                color 0.45s ease;
+            transition-delay: var(--char-delay, 0s);
+            transform: translateY(0);
+            will-change: transform;
+        }
+
+        .letter.highlight {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(100%);
+            color: #d5f45d;
+        }
+
+        .nav-item:hover .letter:not(.highlight),
+        .nav-item:focus-visible .letter:not(.highlight) {
+            transform: translateY(-100%);
+        }
+
+        .nav-item:hover .letter.highlight,
+        .nav-item:focus-visible .letter.highlight {
+            transform: translateY(0);
+        }
+
+        .brandmark {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            font-size: clamp(0.65rem, 1.1vw, 0.9rem);
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .laurel {
+            font-size: 1em;
+        }
+
+        .brand-text {
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                gap: clamp(3rem, 12vw, 4rem);
+            }
+
+            .letter-clip {
+                height: clamp(2rem, 8vw, 3rem);
+            }
+
+            .nav-item {
+                font-size: clamp(1.8rem, 12vw, 2.8rem);
+            }
+
+            .brandmark {
+                gap: 0.75rem;
+                letter-spacing: 0.25em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="screen">
+        <div class="overlay" aria-hidden="true"></div>
+        <div class="content">
+            <nav class="nav" aria-label="Primary">
+                <!-- Navigation items will be inserted here by JavaScript -->
+            </nav>
+            <div class="brandmark">
+                <span class="laurel">⚭</span>
+                <span class="brand-text">Hover animation menu</span>
+                <span class="laurel">⚭</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const NAV_ITEMS = [
+            { id: 'home', label: 'HOME', highlight: true },
+            { id: 'option1', label: 'TIKTOK' },
+            { id: 'option2', label: 'LINKEDIN', accent: true },
+            { id: 'option3', label: 'SETTINGS' }
+        ];
+
+        function createAnimatedWord(text) {
+            const characters = Array.from(text);
+            const word = document.createElement('span');
+            word.className = 'word';
+
+            // Screen reader text
+            const sr = document.createElement('span');
+            sr.className = 'word-sr';
+            sr.textContent = text;
+            word.appendChild(sr);
+
+            // Letters container
+            const letters = document.createElement('span');
+            letters.className = 'letters';
+            letters.setAttribute('aria-hidden', 'true');
+
+            characters.forEach((char, index) => {
+                const letter = char === ' ' ? '\u00A0' : char;
+
+                // Letter clip container
+                const letterClip = document.createElement('span');
+                letterClip.className = 'letter-clip';
+                letterClip.style.setProperty('--char-delay', `${index * 0.03}s`);
+
+                // Letter wrapper
+                const letterWrapper = document.createElement('span');
+                letterWrapper.className = 'letter-wrapper';
+
+                // Normal letter
+                const normalLetter = document.createElement('span');
+                normalLetter.className = 'letter';
+                normalLetter.textContent = letter;
+
+                // Highlight letter
+                const highlightLetter = document.createElement('span');
+                highlightLetter.className = 'letter highlight';
+                highlightLetter.textContent = letter;
+
+                letterWrapper.appendChild(normalLetter);
+                letterWrapper.appendChild(highlightLetter);
+                letterClip.appendChild(letterWrapper);
+                letters.appendChild(letterClip);
+            });
+
+            word.appendChild(letters);
+            return word;
+        }
+
+        function initNavigation() {
+            const nav = document.querySelector('.nav');
+
+            NAV_ITEMS.forEach(item => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'nav-item';
+                
+                if (item.highlight) {
+                    button.classList.add('has-highlight');
+                }
+                if (item.accent) {
+                    button.classList.add('accent');
+                }
+
+                button.setAttribute('data-label', item.label);
+
+                const animatedWord = createAnimatedWord(item.label);
+                button.appendChild(animatedWord);
+
+                nav.appendChild(button);
+            });
+        }
+
+        // Initialize on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initNavigation);
+        } else {
+            initNavigation();
+        }
+    </script>
+</body>
+</html>
+
